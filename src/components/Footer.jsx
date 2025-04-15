@@ -34,10 +34,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-light-blue mb-4">Contact Us</h3>
             <address className="not-italic text-gray-600">
-              <p>123 Bottle Street</p>
-              <p>Manufacturing District</p>
-              <p>Email: info@bottlecraft.com</p>
-              <p>Phone: +1 (555) 123-4567</p>
+              <p>Autonagar</p>
+              <p>Steel Plant Road</p>
+              <p>Email: customize@bottles.com</p>
+              <p>Phone: +91 9848254165</p>
             </address>
           </div>
         </div>
