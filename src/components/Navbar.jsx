@@ -20,6 +20,9 @@ const Navbar = () => {
             <Link to="/" className="text-gray-700 hover:text-[#CFF4FB] transition duration-300">
               Home
             </Link>
+            <Link to="/about" className="text-gray-700 hover:text-[#CFF4FB] transition duration-300">
+              About Us
+            </Link>
             <Link to="/customize" className="text-gray-700 hover:text-[#CFF4FB] transition duration-300">
               Design Your Bottle
             </Link>
@@ -61,6 +64,13 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
             >
               Home
+            </Link>
+            <Link 
+              to="/about" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#CFF4FB] hover:bg-gray-50"
+              onClick={() => setIsOpen(false)}
+            >
+              About Us
             </Link>
             <Link 
               to="/customize" 

@@ -41,10 +41,11 @@ const EnhancedBottle = ({ capColor, bodyColor, topPattern, middlePattern, bottom
     clearcoatRoughness: 0.1,
   });
 
-  // Fixed rotation issue by using useFrame correctly
-  useFrame(() => {
+  // Fixed rotation issue - properly implementing useFrame
+  useFrame((state) => {
     if (group.current) {
-      group.current.rotation.y += 0.005;
+      // Using smooth auto-rotation that doesn't depend on the animation loop timing
+      group.current.rotation.y = state.clock.elapsedTime * 0.2;
     }
   });
 
@@ -203,9 +204,61 @@ const BottleCustomizer = () => {
     requirements: ''
   });
 
-  // Only black and white colors
-  const capColors = ['#000000', '#ffffff'];
-  const bodyColors = ['#ffffff', '#000000'];
+  // Enhanced color palette with at least 12 colors for both cap and body
+  const capColors = [
+    '#000000', // Black
+    '#ffffff', // White
+    '#e63946', // Red
+    '#0077b6', // Blue
+    '#2a9d8f', // Teal
+    '#e9c46a', // Yellow
+    '#f4a261', // Orange
+    '#6a0dad', // Purple
+    '#1da856', // Green
+    '#ff69b4', // Hot Pink
+    '#a0522d', // Brown
+    '#c0c0c0', // Silver
+    '#ffd700', // Gold
+    '#00ffff', // Cyan
+    '#808080', // Gray
+  ];
+  
+  const bodyColors = [
+    '#ffffff', // White
+    '#000000', // Black
+    '#e63946', // Red
+    '#0077b6', // Blue
+    '#2a9d8f', // Teal
+    '#e9c46a', // Yellow
+    '#f4a261', // Orange
+    '#6a0dad', // Purple
+    '#1da856', // Green
+    '#ff69b4', // Hot Pink
+    '#a0522d', // Brown
+    '#c0c0c0', // Silver
+    '#ffd700', // Gold
+    '#00ffff', // Cyan
+    '#808080', // Gray
+  ];
+
+  // Color name mapping for display
+  const colorNames = {
+    '#000000': 'Black',
+    '#ffffff': 'White',
+    '#e63946': 'Red',
+    '#0077b6': 'Blue',
+    '#2a9d8f': 'Teal',
+    '#e9c46a': 'Yellow',
+    '#f4a261': 'Orange',
+    '#6a0dad': 'Purple',
+    '#1da856': 'Green',
+    '#ff69b4': 'Hot Pink',
+    '#a0522d': 'Brown',
+    '#c0c0c0': 'Silver',
+    '#ffd700': 'Gold',
+    '#00ffff': 'Cyan',
+    '#808080': 'Gray',
+  };
   
   // Size options
   const sizes = [
@@ -363,6 +416,12 @@ const BottleCustomizer = () => {
                   <p className="text-gray-600">
                     Size: <span className="font-semibold text-gray-800">{size}</span>
                   </p>
+                  <p className="text-gray-600">
+                    Cap Color: <span className="font-semibold text-gray-800">{colorNames[capColor]}</span>
+                  </p>
+                  <p className="text-gray-600">
+                    Body Color: <span className="font-semibold text-gray-800">{colorNames[bodyColor]}</span>
+                  </p>
                 </div>
               </>
             )}
@@ -384,7 +443,7 @@ const BottleCustomizer = () => {
             
             {/* Section Tabs */}
             <motion.div 
-              className="flex mb-6 border-b border-gray-300"
+              className="flex mb-6 border-b border-gray-300 flex-wrap"
               variants={itemVariants}
             >
               <button 
@@ -447,14 +506,17 @@ const BottleCustomizer = () => {
               {activeSection === 'cap' && (
                 <div>
                   <h3 className="text-lg font-medium mb-4 text-gray-800">Select Cap Color</h3>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-5 gap-2">
                     {capColors.map((color) => (
-                      <button
-                        key={color}
-                        className={`h-12 w-full rounded-full ${capColor === color ? 'ring-2 ring-gray-800 ring-offset-2' : ''}`}
-                        style={{ backgroundColor: color }}
-                        onClick={() => setCapColor(color)}
-                      />
+                      <div key={color} className="text-center">
+                        <button
+                          className={`h-12 w-12 rounded-full mx-auto mb-1 ${capColor === color ? 'ring-2 ring-gray-800 ring-offset-2' : ''}`}
+                          style={{ backgroundColor: color }}
+                          onClick={() => setCapColor(color)}
+                          title={colorNames[color]}
+                        />
+                        <span className="text-xs text-gray-600">{colorNames[color]}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -463,14 +525,17 @@ const BottleCustomizer = () => {
               {activeSection === 'body' && (
                 <div>
                   <h3 className="text-lg font-medium mb-4 text-gray-800">Select Bottle Color</h3>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-5 gap-2">
                     {bodyColors.map((color) => (
-                      <button
-                        key={color}
-                        className={`h-12 w-full rounded-full ${bodyColor === color ? 'ring-2 ring-gray-800 ring-offset-2' : ''}`}
-                        style={{ backgroundColor: color }}
-                        onClick={() => setBodyColor(color)}
-                      />
+                      <div key={color} className="text-center">
+                        <button
+                          className={`h-12 w-12 rounded-full mx-auto mb-1 ${bodyColor === color ? 'ring-2 ring-gray-800 ring-offset-2' : ''}`}
+                          style={{ backgroundColor: color }}
+                          onClick={() => setBodyColor(color)}
+                          title={colorNames[color]}
+                        />
+                        <span className="text-xs text-gray-600">{colorNames[color]}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
